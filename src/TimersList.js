@@ -25,7 +25,13 @@ const TimersList = props => {
             description={timer.description}
             duration={timer.duration}
             remaining={now
-              .countdown(end, countdown.SECONDS | countdown.MILLISECONDS)
+              .countdown(
+                end,
+                countdown.HOURS |
+                  countdown.MINUTES |
+                  countdown.SECONDS |
+                  countdown.MILLISECONDS,
+              )
               .toString()}
             timerInterval={timer.timerInterval}
             onStartClick={() => {
