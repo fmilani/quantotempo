@@ -10,12 +10,26 @@ export function addTimer(duration) {
   };
 }
 
-export function startTimer(id, timerInterval) {
-  return {
-    type: 'START_TIMER',
-    id,
-    timerInterval,
+export function startTimer(id) {
+  // const timerInterval = setInterval(() => {
+  //   dispatch(tickTimer(id, 10));
+  // }, 10);
+  // dispatch(startTimer(id, timerInterval));
+  return (dispatch, getState) => {
+    const timerInterval = setInterval(() => {
+      dispatch(tickTimer(id, 10));
+    }, 10);
+    dispatch({
+      type: 'START_TIMER',
+      id,
+      timerInterval,
+    });
   };
+  // return {
+  //   type: 'START_TIMER',
+  //   id,
+  //   timerInterval,
+  // };
 }
 
 export function tickTimer(id, ammount) {

@@ -20,10 +20,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addTimer(15 * 1000));
   },
   onStartTimerClick: id => {
-    const timerInterval = setInterval(() => {
-      dispatch(tickTimer(id, 10));
-    }, 10);
-    dispatch(startTimer(id, timerInterval));
+    // const timerInterval = setInterval(() => {
+    //   dispatch(tickTimer(id, 10));
+    // }, 10);
+    // dispatch(startTimer(id, timerInterval));
+    dispatch(startTimer(id));
   },
   onPauseTimerClick: id => {
     dispatch(pauseTimer(id));
