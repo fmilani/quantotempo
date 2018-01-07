@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import 'moment-countdown';
+import countdown from 'countdown';
 import Timer from './Timer';
 
 const TimersList = props => {
@@ -16,14 +17,16 @@ const TimersList = props => {
         + Add a timer
       </button>
       {props.timers.map(timer => {
-        const end = moment(now).add(timer.remaining, 'seconds');
+        const end = moment(now).add(timer.remaining, 'milliseconds');
         return (
           <Timer
             key={timer.id}
             id={timer.id}
             description={timer.description}
             duration={timer.duration}
-            remaining={now.countdown(end).toString()}
+            remaining={now
+              .countdown(end, countdown.SECONDS | countdown.MILLISECONDS)
+              .toString()}
             timerInterval={timer.timerInterval}
             onStartClick={() => {
               props.onStartTimerClick(timer.id);
