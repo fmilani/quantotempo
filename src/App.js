@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import appReducers from './reducers';
 import TimersListContainer from './TimersListContainer';
@@ -21,7 +22,9 @@ const persistedState = {
 class App extends Component {
   render() {
     return (
-      <Provider store={createStore(appReducers, persistedState)}>
+      <Provider
+        store={createStore(appReducers, persistedState, applyMiddleware(thunk))}
+      >
         <div className="App">
           <header className="App-header">
             <h1 className="App-title">Welcome to React</h1>
