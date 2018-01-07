@@ -44,23 +44,20 @@ export function pauseTimer(id) {
 }
 
 export function resetTimer(id) {
-  return (dispatch, getState) => {
-    const timer = getState().timers.find(timer => timer.id === id);
-    clearInterval(timer.timerInterval);
-    dispatch({
-      type: 'RESET_TIMER',
-      id,
-    });
-    if (timer.timerInterval) {
-      // the timer was running before, start running again
-      dispatch(startTimer(id));
-    }
+  return {
+    type: 'RESET_TIMER',
+    id,
   };
 }
 
 export function removeTimer(id) {
-  return {
-    type: 'REMOVE_TIMER',
-    id,
+  return (dispatch, getState) => {
+    clearInterval(
+      getState().timers.find(timer => timer.id === id).timerInterval,
+    );
+    dispatch({
+      type: 'REMOVE_TIMER',
+      id,
+    });
   };
 }
