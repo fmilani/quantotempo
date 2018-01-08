@@ -13,9 +13,10 @@ const persistedState = {
     {
       id: 1,
       description: 'Test timer',
-      duration: 120 * 1000,
-      remaining: 120 * 1000,
+      duration: 3 * 1000,
+      remaining: 3 * 1000,
       timerInterval: null,
+      soundPlaying: false,
     },
   ],
 };

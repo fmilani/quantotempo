@@ -1,4 +1,5 @@
 import React from 'react';
+import Sound from './Sound';
 
 const Timer = ({
   id,
@@ -10,6 +11,7 @@ const Timer = ({
   onPauseClick,
   onResetClick,
   onRemoveClick,
+  soundPlaying,
 }) => (
   <div
     style={{
@@ -22,12 +24,23 @@ const Timer = ({
     <div>{description}</div>
     <div>duration: {duration}</div>
     <div>remaining: {remaining}</div>
+    <div>Sound playing: {soundPlaying ? 'yes' : 'no'}</div>
     {timerInterval === null ? (
       <button onClick={onStartClick}>Start</button>
+    ) : soundPlaying ? (
+      <button
+        onClick={() => {
+          onPauseClick();
+          onResetClick();
+        }}
+      >
+        Stop
+      </button>
     ) : (
       <button onClick={onPauseClick}>Pause</button>
     )}
     <button onClick={onResetClick}>Reset</button>
+    {soundPlaying ? <Sound /> : null}
   </div>
 );
 

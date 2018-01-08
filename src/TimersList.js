@@ -46,6 +46,7 @@ const TimersList = props => {
             onRemoveClick={() => {
               props.onRemoveTimerClick(timer.id);
             }}
+            soundPlaying={timer.soundPlaying}
           />
         );
       })}

@@ -7,6 +7,7 @@ export function addTimer(duration) {
     description: 'Teste',
     duration,
     remaining: duration,
+    soundPlaying: false,
   };
 }
 
@@ -24,10 +25,16 @@ export function startTimer(id) {
 }
 
 export function tickTimer(id, ammount) {
-  return {
-    type: 'TICK_TIMER',
-    ammount,
-    id,
+  return (dispatch, getState) => {
+    const timer = getState().timers.find(timer => timer.id === id);
+    if (timer.remaining <= 0 && !timer.soundPlaying) {
+      dispatch(startSound(id));
+    }
+    dispatch({
+      type: 'TICK_TIMER',
+      ammount,
+      id,
+    });
   };
 }
 
@@ -59,5 +66,19 @@ export function removeTimer(id) {
       type: 'REMOVE_TIMER',
       id,
     });
+  };
+}
+
+export function startSound(id) {
+  return {
+    type: 'START_SOUND',
+    id,
+  };
+}
+
+export function stopSound(id) {
+  return {
+    type: 'STOP_SOUND',
+    id,
   };
 }
