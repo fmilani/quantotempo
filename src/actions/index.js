@@ -75,10 +75,3 @@ export function startSound(id) {
     id,
   };
 }
-
-export function stopSound(id) {
-  return {
-    type: 'STOP_SOUND',
-    id,
-  };
-}

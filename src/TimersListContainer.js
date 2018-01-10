@@ -11,6 +11,7 @@ import TimersList from './TimersList';
 
 const mapStateToProps = state => ({
   timers: state.timers,
+  beep: state.beep,
 });
 
 const mapDispatchToProps = dispatch => ({

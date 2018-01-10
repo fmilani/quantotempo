@@ -61,8 +61,23 @@ const timers = (state = [], action) => {
       return state;
   }
 };
+
+// const beep = (state = new Audio('beep.wav'), action) => {
+//   return state;
+// };
+
+const showApp = (state = false, action) => {
+  switch (action.type) {
+    case 'SHOW_APP':
+      return true;
+    default:
+      return state;
+  }
+};
 const appReducers = combineReducers({
   timers,
+  // beep,
+  showApp,
 });
 
 export default appReducers;

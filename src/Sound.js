@@ -1,15 +1,25 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 export default class Sound extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     this.audio = new Audio('beep.wav');
-    this.audio.loop = true;
     this.audio.play();
+    this.audio.muted = true;
+    this.audio.loop = true;
   }
 
   componentWillUnmount() {
     this.audio.pause();
     delete this.audio;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.play && nextProps.play) {
+      this.audio.muted = false;
+    } else if (this.props.play && !nextProps.play) {
+      this.audio.muted = true;
+    }
   }
 
   render() {
