@@ -27,6 +27,8 @@ const TimersList = props => {
             description: this.descriptionField.value,
             duration: this.durationField.value * 1000,
           });
+          this.descriptionField.value = null;
+          this.durationField.value = null;
         }}
       >
         + Add a timer
