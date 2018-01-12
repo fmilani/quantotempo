@@ -2,33 +2,35 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import throttle from 'lodash/throttle';
 
 import appReducers from './reducers';
 import AppContainer from './AppContainer';
-
+import { loadState, saveState } from './localStorage';
 import './App.css';
 
-// mock preloaded state
-const persistedState = {
-  timers: [
-    {
-      id: 1,
-      description: 'Test timer',
-      duration: 3 * 1000,
-      remaining: 3 * 1000,
-      timerInterval: null,
-      soundPlaying: false,
-    },
-  ],
-  showApp: false,
-};
+const store = createStore(appReducers, loadState(), applyMiddleware(thunk));
+
+store.subscribe(
+  throttle(() => {
+    saveState({
+      timers: store.getState().timers.map(timer => ({
+        ...timer,
+        // for now we wont save the 'running' state of the timers
+        // we will probably need to dispatch an action on app load
+        // to check for running timers and restore their 'setInterval'
+        // state
+        timerInterval: null,
+        remaining: timer.duration,
+      })),
+    });
+  }, 1000),
+);
 
 class AppRoot extends Component {
   render() {
     return (
-      <Provider
-        store={createStore(appReducers, persistedState, applyMiddleware(thunk))}
-      >
+      <Provider store={store}>
         <AppContainer />
       </Provider>
     );
