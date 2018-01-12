@@ -9,9 +9,24 @@ const TimersList = props => {
 
   return (
     <div>
+      <input
+        type="text"
+        ref={node => {
+          this.descriptionField = node;
+        }}
+      />
+      <input
+        type="number"
+        ref={node => {
+          this.durationField = node;
+        }}
+      />
       <button
-        onClick={() => {
-          props.onAddTimerClick();
+        onClick={e => {
+          props.onAddTimerClick({
+            description: this.descriptionField.value,
+            duration: this.durationField.value * 1000,
+          });
         }}
       >
         + Add a timer

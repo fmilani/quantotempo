@@ -15,8 +15,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAddTimerClick: () => {
-    dispatch(addTimer(2 * 1000));
+  onAddTimerClick: ({ description, duration }) => {
+    dispatch(addTimer({ description, duration }));
   },
   onStartTimerClick: id => {
     dispatch(startTimer(id));

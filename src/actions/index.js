@@ -1,10 +1,10 @@
 import { v4 } from 'node-uuid';
 
-export function addTimer(duration) {
+export function addTimer({ description, duration }) {
   return {
     type: 'ADD_TIMER',
     id: v4(),
-    description: 'Teste',
+    description,
     duration,
     remaining: duration,
     soundPlaying: false,
