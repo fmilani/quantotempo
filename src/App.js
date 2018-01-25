@@ -4,7 +4,7 @@ import SplashContainer from './SplashContainer';
 import TimersListContainer from './TimersListContainer';
 
 const App = props => (
-  <div className="App">
+  <div style={{ textAlign: 'center' }}>
     <SplashContainer />
     {props.showApp ? <TimersListContainer /> : null}
   </div>
