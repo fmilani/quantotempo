@@ -1,4 +1,13 @@
 import React, { Component } from 'react';
+import Card, { CardHeader } from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import DeleteForeverIcon from 'material-ui-icons/DeleteForever';
+import PlayIcon from 'material-ui-icons/PlayArrow';
+import ReplayIcon from 'material-ui-icons/Replay';
+import PauseIcon from 'material-ui-icons/Pause';
+import StopIcon from 'material-ui-icons/Stop';
+import Typography from 'material-ui/Typography';
+
 import Sound from './Sound';
 
 class Timer extends Component {
@@ -20,38 +29,50 @@ class Timer extends Component {
       onResetClick,
       onRemoveClick,
       soundPlaying,
+      style,
     } = this.props;
 
     return (
-      <div
+      <Card
         style={{
-          border: '1px solid',
+          padding: 10,
+          ...style,
         }}
       >
-        <span style={{ float: 'right' }} onClick={onRemoveClick}>
-          X
-        </span>
-        <div>{description}</div>
-        <div>duration: {duration}</div>
-        <div>remaining: {remaining}</div>
-        <div>Sound playing: {soundPlaying ? 'yes' : 'no'}</div>
+        <Typography type="headline" gutterBottom>
+          {description}
+        </Typography>
+        <div>{remaining}</div>
         {timerInterval === null ? (
-          <button onClick={onStartClick}>Start</button>
+          <IconButton onClick={onStartClick}>
+            <PlayIcon />
+          </IconButton>
         ) : soundPlaying ? (
-          <button
+          <IconButton
             onClick={() => {
               onPauseClick();
               onResetClick();
             }}
           >
-            Stop
-          </button>
+            <StopIcon />
+          </IconButton>
         ) : (
-          <button onClick={onPauseClick}>Pause</button>
+          <IconButton onClick={onPauseClick}>
+            <PauseIcon />
+          </IconButton>
         )}
-        <button onClick={onResetClick}>Reset</button>
+        {!soundPlaying ? (
+          <IconButton onClick={onResetClick}>
+            <ReplayIcon />
+          </IconButton>
+        ) : null}
+        <div>
+          <IconButton onClick={onRemoveClick}>
+            <DeleteForeverIcon />
+          </IconButton>
+        </div>
         <Sound play={soundPlaying} />
-      </div>
+      </Card>
     );
   }
 }
