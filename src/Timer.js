@@ -11,7 +11,6 @@ class Timer extends Component {
   }
   render() {
     const {
-      id,
       description,
       duration,
       remaining,

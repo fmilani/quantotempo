@@ -1,5 +1,19 @@
 import { v4 } from 'node-uuid';
 
+export function changeNewTimerDescription(newDescription) {
+  return {
+    type: 'CHANGE_NEW_TIMER_DESCRIPTION',
+    newDescription,
+  };
+}
+
+export function changeNewTimerDuration(newDuration) {
+  return {
+    type: 'CHANGE_NEW_TIMER_DURATION',
+    newDuration,
+  };
+}
+
 export function addTimer({ description, duration }) {
   return {
     type: 'ADD_TIMER',

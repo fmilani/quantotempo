@@ -62,9 +62,24 @@ const timers = (state = [], action) => {
   }
 };
 
-// const beep = (state = new Audio('beep.wav'), action) => {
-//   return state;
-// };
+const newTimerDescription = (state = '', action) => {
+  switch (action.type) {
+    case 'CHANGE_NEW_TIMER_DESCRIPTION':
+      return action.newDescription;
+    default:
+      return state;
+  }
+};
+
+const newTimerDuration = (state = '000000', action) => {
+  switch (action.type) {
+    case 'CHANGE_NEW_TIMER_DURATION':
+      if (!action.newDuration) return '000000';
+      return action.newDuration;
+    default:
+      return state;
+  }
+};
 
 const showApp = (state = false, action) => {
   switch (action.type) {
@@ -76,7 +91,8 @@ const showApp = (state = false, action) => {
 };
 const appReducers = combineReducers({
   timers,
-  // beep,
+  newTimerDescription,
+  newTimerDuration,
   showApp,
 });
 

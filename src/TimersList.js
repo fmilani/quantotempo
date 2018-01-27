@@ -9,30 +9,6 @@ const TimersList = props => {
 
   return (
     <div>
-      <input
-        type="text"
-        ref={node => {
-          this.descriptionField = node;
-        }}
-      />
-      <input
-        type="number"
-        ref={node => {
-          this.durationField = node;
-        }}
-      />
-      <button
-        onClick={e => {
-          props.onAddTimerClick({
-            description: this.descriptionField.value,
-            duration: this.durationField.value * 1000,
-          });
-          this.descriptionField.value = null;
-          this.durationField.value = null;
-        }}
-      >
-        + Add a timer
-      </button>
       {props.timers.map(timer => {
         const end = moment(now).add(timer.remaining, 'milliseconds');
         return (
