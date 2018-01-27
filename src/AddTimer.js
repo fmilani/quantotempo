@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+import AlarmAdd from 'material-ui-icons/AlarmAdd';
 
-export default class AddTimer extends Component {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+});
+
+class AddTimer extends Component {
   submitNewTimer() {
     const hours = Math.floor(this.props.newTimerDuration / 10000);
     const minutes = Math.floor(
@@ -17,8 +29,9 @@ export default class AddTimer extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <form onSubmit={() => {}}>
+      <form>
         <NumberFormat
           type="tel"
           format="##h ##m ##s"
@@ -64,17 +77,32 @@ export default class AddTimer extends Component {
           onChange={e => {
             this.props.changeDescription(e.target.value);
           }}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              this.submitNewTimer();
+            }
+          }}
         />
-        <button
-          style={{ width: '100%', height: 30 }}
+        <Button
+          color="secondary"
+          className={classes.button}
+          style={{
+            height: 70,
+            margin: '10px 0',
+          }}
+          raised
+          fullWidth
           onClick={e => {
             e.preventDefault();
             this.submitNewTimer();
           }}
         >
-          + Add a timer
-        </button>
+          <AlarmAdd className={classes.leftIcon} />
+          Add timer
+        </Button>
       </form>
     );
   }
 }
+
+export default withStyles(styles)(AddTimer);
