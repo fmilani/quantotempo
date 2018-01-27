@@ -5386,6 +5386,10 @@ react-event-listener@^0.5.0, react-event-listener@^0.5.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
+react-flip-move@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-flip-move/-/react-flip-move-3.0.0.tgz#69f2ba62e491912677a07a25704eb0a4b6457a65"
+
 react-jss@^8.1.0:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.2.1.tgz#b2905063ba8b950f095a139a75232d851c79e15e"

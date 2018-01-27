@@ -2,6 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import 'moment-countdown';
 import countdown from 'countdown';
+import FlipMove from 'react-flip-move';
+
 import Timer from './Timer';
 
 countdown.setLabels(null, null, null, null, "Time's up");
@@ -9,7 +11,7 @@ const TimersList = props => {
   const now = moment();
 
   return (
-    <div>
+    <FlipMove>
       {props.timers.map(timer => {
         const end = moment(now).add(timer.remaining, 'milliseconds');
         const remaining = now.countdown(end);
@@ -40,7 +42,7 @@ const TimersList = props => {
           />
         );
       })}
-    </div>
+    </FlipMove>
   );
 };
 
