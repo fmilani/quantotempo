@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Card, { CardHeader } from 'material-ui/Card';
+import Card from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import DeleteForeverIcon from 'material-ui-icons/DeleteForever';
 import PlayIcon from 'material-ui-icons/PlayArrow';
@@ -21,7 +21,6 @@ class Timer extends Component {
   render() {
     const {
       description,
-      duration,
       remaining,
       timerInterval,
       onStartClick,
