@@ -7,8 +7,12 @@ import AddTimerContainer from './AddTimerContainer';
 const App = props => (
   <div style={{ textAlign: 'center' }}>
     <SplashContainer />
-    <AddTimerContainer />
-    {props.showApp ? <TimersListContainer /> : null}
+    {props.showApp ? (
+      <div>
+        <AddTimerContainer />
+        <TimersListContainer />
+      </div>
+    ) : null}
   </div>
 );
 
