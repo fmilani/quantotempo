@@ -8,13 +8,17 @@ import AlarmAdd from 'material-ui-icons/AlarmAdd';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: `${2 * theme.spacing.unit}px 0`,
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
+  inputsWrapper: {
+    textAlign: 'center',
+    padding: theme.spacing.unit,
+  },
   inputField: {
-    margin: theme.spacing.unit,
+    margin: `${theme.spacing.unit}px 0`,
   },
 });
 
@@ -56,14 +60,12 @@ class AddTimer extends Component {
     const { classes } = this.props;
     return (
       <form>
-        <div className={classes.inputField}>
+        <div className={classes.inputsWrapper}>
           <Input
             value={this.props.newTimerDuration}
             inputComponent={TimerFormat}
             fullWidth
-            style={{
-              margin: '10px 0',
-            }}
+            className={classes.inputField}
             onKeyDown={event => {
               event.preventDefault();
               const pressedKey = event.key;
@@ -96,9 +98,7 @@ class AddTimer extends Component {
             value={this.props.newTimerDescription}
             placeholder="Description"
             fullWidth
-            style={{
-              margin: '10px 0',
-            }}
+            className={classes.inputField}
             onChange={e => {
               this.props.changeDescription(e.target.value);
             }}
@@ -108,25 +108,19 @@ class AddTimer extends Component {
               }
             }}
           />
+          <Button
+            raised
+            color="secondary"
+            className={classes.button}
+            onClick={e => {
+              e.preventDefault();
+              this.submitNewTimer();
+            }}
+          >
+            <AlarmAdd className={classes.leftIcon} />
+            Add timer
+          </Button>
         </div>
-
-        <Button
-          color="secondary"
-          className={classes.button}
-          style={{
-            height: 70,
-            margin: '10px 0',
-          }}
-          raised
-          fullWidth
-          onClick={e => {
-            e.preventDefault();
-            this.submitNewTimer();
-          }}
-        >
-          <AlarmAdd className={classes.leftIcon} />
-          Add timer
-        </Button>
       </form>
     );
   }
