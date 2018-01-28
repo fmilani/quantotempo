@@ -8,7 +8,7 @@ import ReplayIcon from 'material-ui-icons/Replay';
 import PauseIcon from 'material-ui-icons/Pause';
 import StopIcon from 'material-ui-icons/Stop';
 import Typography from 'material-ui/Typography';
-import { LinearProgress, CircularProgress } from 'material-ui/Progress';
+import { LinearProgress } from 'material-ui/Progress';
 
 import Sound from './Sound';
 

@@ -32,7 +32,7 @@ const TimersList = props => {
             }}
             soundPlaying={timer.soundPlaying}
             style={{
-              margin: 10,
+              margin: '10px 0',
             }}
           />
         );
