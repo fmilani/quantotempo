@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import 'moment-countdown';
 import countdown from 'countdown';
 import FlipMove from 'react-flip-move';
@@ -8,20 +7,16 @@ import Timer from './Timer';
 
 countdown.setLabels(null, null, null, null, "Time's up");
 const TimersList = props => {
-  const now = moment();
-
   return (
     <FlipMove>
       {props.timers.map(timer => {
-        const end = moment(now).add(timer.remaining, 'milliseconds');
-        const remaining = now.countdown(end);
         return (
           <Timer
             key={timer.id}
             id={timer.id}
             description={timer.description}
             duration={timer.duration}
-            remaining={(remaining.value < 0 ? '- ' : '') + remaining.toString()}
+            remaining={timer.remaining}
             timerInterval={timer.timerInterval}
             onStartClick={() => {
               props.onStartTimerClick(timer.id);
@@ -37,7 +32,7 @@ const TimersList = props => {
             }}
             soundPlaying={timer.soundPlaying}
             style={{
-              margin: '10px',
+              margin: 10,
             }}
           />
         );
