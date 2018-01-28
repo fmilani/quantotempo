@@ -29,17 +29,7 @@ const timer = (state, action) => {
       if (state.id !== action.id) {
         return state;
       }
-      return { ...state, remaining: state.duration, soundPlaying: false };
-    case 'START_SOUND':
-      if (state.id !== action.id) {
-        return state;
-      }
-      return { ...state, soundPlaying: true };
-    case 'STOP_SOUND':
-      if (state.id !== action.id) {
-        return state;
-      }
-      return { ...state, soundPlaying: false };
+      return { ...state, remaining: state.duration };
     default:
       return state;
   }
@@ -52,8 +42,6 @@ const timers = (state = [], action) => {
     case 'START_TIMER':
     case 'PAUSE_TIMER':
     case 'RESET_TIMER':
-    case 'START_SOUND':
-    case 'STOP_SOUND':
       return state.map(t => timer(t, action));
     case 'REMOVE_TIMER':
       return state.filter(t => t.id !== action.id);
@@ -81,19 +69,10 @@ const newTimerDuration = (state = '000000', action) => {
   }
 };
 
-const showApp = (state = false, action) => {
-  switch (action.type) {
-    case 'SHOW_APP':
-      return true;
-    default:
-      return state;
-  }
-};
 const appReducers = combineReducers({
   timers,
   newTimerDescription,
   newTimerDuration,
-  showApp,
 });
 
 export default appReducers;

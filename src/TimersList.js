@@ -30,7 +30,6 @@ const TimersList = props => {
             onRemoveClick={() => {
               props.onRemoveTimerClick(timer.id);
             }}
-            soundPlaying={timer.soundPlaying}
             style={{
               margin: '10px 0',
             }}

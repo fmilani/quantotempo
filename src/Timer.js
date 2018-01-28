@@ -30,7 +30,6 @@ class Timer extends Component {
       onPauseClick,
       onResetClick,
       onRemoveClick,
-      soundPlaying,
       style,
     } = this.props;
 
@@ -69,21 +68,23 @@ class Timer extends Component {
           <IconButton onClick={onStartClick}>
             <PlayIcon />
           </IconButton>
-        ) : soundPlaying ? (
+        ) : remaining < 0 ? (
           <IconButton
             onClick={() => {
               onPauseClick();
               onResetClick();
             }}
           >
+            <Sound play={remaining < 0} />
             <StopIcon />
           </IconButton>
         ) : (
           <IconButton onClick={onPauseClick}>
+            <Sound play={remaining < 0} />
             <PauseIcon />
           </IconButton>
         )}
-        {!soundPlaying ? (
+        {!(remaining < 0) ? (
           <IconButton onClick={onResetClick}>
             <ReplayIcon />
           </IconButton>
@@ -93,7 +94,6 @@ class Timer extends Component {
             <DeleteForeverIcon />
           </IconButton>
         </div>
-        <Sound play={soundPlaying} />
       </Card>
     );
   }
