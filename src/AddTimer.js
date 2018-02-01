@@ -5,6 +5,9 @@ import Input from 'material-ui/Input';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import AlarmAdd from 'material-ui-icons/AlarmAdd';
+import Modal from 'material-ui/Modal';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
   button: {
@@ -19,6 +22,13 @@ const styles = theme => ({
   },
   inputField: {
     margin: `${theme.spacing.unit}px 0`,
+  },
+  modal: {
+    backgroundColor: theme.palette.primary.main,
+    width: '100%',
+    paddingTop: 10,
+    textAlign: 'center',
+    outline: 'none',
   },
 });
 
@@ -42,6 +52,8 @@ class TimerFormat extends Component {
 }
 
 class AddTimer extends Component {
+  state = { modalFormOpen: false };
+
   submitNewTimer() {
     const hours = Math.floor(this.props.newTimerDuration / 10000);
     const minutes = Math.floor(
@@ -54,74 +66,124 @@ class AddTimer extends Component {
     });
     this.props.changeDescription('');
     this.props.changeDuration('000000');
+    this.closeModalForm();
   }
+
+  openModalForm = () => {
+    this.setState(prevState => ({ modalFormOpen: true }));
+  };
+
+  closeModalForm = () => {
+    this.setState(prevState => ({ modalFormOpen: false }));
+  };
+
+  renderModalForm = () => {
+    const { classes } = this.props;
+    return (
+      <Modal
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        open={this.state.modalFormOpen}
+        onClose={this.closeModalForm}
+        disableRestoreFocus
+      >
+        <Paper className={classes.modal}>
+          <Typography gutterBottom type="display2" id="modal-title">
+            New Timer
+          </Typography>
+          <form>
+            <Input
+              value={this.props.newTimerDuration}
+              inputComponent={TimerFormat}
+              fullWidth
+              className={classes.inputField}
+              onKeyDown={event => {
+                event.preventDefault();
+                const pressedKey = event.key;
+                if (
+                  (pressedKey < '0' || pressedKey > '9') &&
+                  pressedKey !== 'Backspace' &&
+                  pressedKey !== 'Tab' &&
+                  pressedKey !== 'Enter'
+                ) {
+                  return;
+                }
+                if (pressedKey === 'Tab' || pressedKey === 'Enter') {
+                  this.descriptionField.focus();
+                  return;
+                }
+                let newValue;
+                if (pressedKey === 'Backspace') {
+                  newValue = '0' + this.props.newTimerDuration.slice(0, -1);
+                } else {
+                  newValue = this.props.newTimerDuration.slice(1) + pressedKey;
+                }
+                this.props.changeDuration(newValue);
+              }}
+            />
+            <TextField
+              inputProps={{ style: { textAlign: 'center' } }}
+              inputRef={node => {
+                this.descriptionField = node;
+              }}
+              value={this.props.newTimerDescription}
+              placeholder="Description"
+              fullWidth
+              className={classes.inputField}
+              onChange={e => {
+                this.props.changeDescription(e.target.value);
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  this.submitNewTimer();
+                }
+              }}
+            />
+            <Button
+              fullWidth
+              raised
+              color="secondary"
+              className={classes.button}
+              onClick={e => {
+                e.preventDefault();
+                this.submitNewTimer();
+              }}
+            >
+              Create timer
+            </Button>
+            <Button
+              className={classes.button}
+              onClick={e => {
+                e.preventDefault();
+                this.closeModalForm();
+              }}
+            >
+              Cancel
+            </Button>
+          </form>
+        </Paper>
+      </Modal>
+    );
+  };
 
   render() {
     const { classes } = this.props;
     return (
-      <form>
-        <div className={classes.inputsWrapper}>
-          <Input
-            value={this.props.newTimerDuration}
-            inputComponent={TimerFormat}
-            fullWidth
-            className={classes.inputField}
-            onKeyDown={event => {
-              event.preventDefault();
-              const pressedKey = event.key;
-              if (
-                (pressedKey < '0' || pressedKey > '9') &&
-                pressedKey !== 'Backspace' &&
-                pressedKey !== 'Tab' &&
-                pressedKey !== 'Enter'
-              ) {
-                return;
-              }
-              if (pressedKey === 'Tab' || pressedKey === 'Enter') {
-                this.descriptionField.focus();
-                return;
-              }
-              let newValue;
-              if (pressedKey === 'Backspace') {
-                newValue = '0' + this.props.newTimerDuration.slice(0, -1);
-              } else {
-                newValue = this.props.newTimerDuration.slice(1) + pressedKey;
-              }
-              this.props.changeDuration(newValue);
-            }}
-          />
-          <TextField
-            inputProps={{ style: { textAlign: 'center' } }}
-            inputRef={node => {
-              this.descriptionField = node;
-            }}
-            value={this.props.newTimerDescription}
-            placeholder="Description"
-            fullWidth
-            className={classes.inputField}
-            onChange={e => {
-              this.props.changeDescription(e.target.value);
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter') {
-                this.submitNewTimer();
-              }
-            }}
-          />
-          <Button
-            raised
-            color="secondary"
-            className={classes.button}
-            onClick={e => {
-              e.preventDefault();
-              this.submitNewTimer();
-            }}
-          >
-            <AlarmAdd className={classes.leftIcon} />
-            Add timer
-          </Button>
-        </div>
-      </form>
+      <div className={classes.inputsWrapper}>
+        <Button
+          raised
+          color="secondary"
+          className={classes.button}
+          onClick={e => {
+            e.preventDefault();
+            this.openModalForm();
+          }}
+        >
+          <AlarmAdd className={classes.leftIcon} />
+          Add timer
+        </Button>
+        {this.renderModalForm()}
+      </div>
     );
   }
 }
