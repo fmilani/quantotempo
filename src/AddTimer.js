@@ -10,15 +10,15 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
+  addTimerFab: {
+    textAlign: 'center',
+    width: '100%',
+    position: 'fixed',
+    bottom: 2 * theme.spacing.unit,
+    zIndex: theme.zIndex.appBar,
+  },
   button: {
     margin: `${2 * theme.spacing.unit}px 0`,
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  inputsWrapper: {
-    textAlign: 'center',
-    padding: theme.spacing.unit,
   },
   inputField: {
     margin: `${theme.spacing.unit}px 0`,
@@ -169,19 +169,20 @@ class AddTimer extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.inputsWrapper}>
-        <Button
-          raised
-          color="secondary"
-          className={classes.button}
-          onClick={e => {
-            e.preventDefault();
-            this.openModalForm();
-          }}
-        >
-          <AlarmAdd className={classes.leftIcon} />
-          Add timer
-        </Button>
+      <div>
+        <div className={classes.addTimerFab}>
+          <Button
+            aria-label="Add new timer"
+            fab
+            color="secondary"
+            onClick={e => {
+              e.preventDefault();
+              this.openModalForm();
+            }}
+          >
+            <AlarmAdd />
+          </Button>
+        </div>
         {this.renderModalForm()}
       </div>
     );

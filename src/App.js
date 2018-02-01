@@ -44,8 +44,8 @@ const App = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
       <Reboot />
-      <AddTimerContainer />
       <TimersListContainer />
+      <AddTimerContainer />
     </MuiThemeProvider>
   </Provider>
 );
