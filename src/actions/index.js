@@ -25,10 +25,11 @@ export function addTimer({ description, duration }) {
 }
 
 export function startTimer(id) {
+  const TICK_INTERVAL = 100;
   return (dispatch, getState) => {
     const timerInterval = setInterval(() => {
-      dispatch(tickTimer(id, 10));
-    }, 10);
+      dispatch(tickTimer(id, TICK_INTERVAL));
+    }, TICK_INTERVAL);
     dispatch({
       type: 'START_TIMER',
       id,
