@@ -14,7 +14,12 @@ import Sound from './Sound';
 
 class Timer extends Component {
   shouldComponentUpdate(nextProps) {
-    if (!nextProps.timerInterval && !this.props.timerInterval) {
+    const remainingHasChanged = nextProps.remaining !== this.props.remaining;
+    if (
+      !nextProps.timerInterval &&
+      !this.props.timerInterval &&
+      !remainingHasChanged
+    ) {
       return false;
     }
 
