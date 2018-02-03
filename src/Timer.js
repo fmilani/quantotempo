@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import Card from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
@@ -11,6 +12,14 @@ import Typography from 'material-ui/Typography';
 import { LinearProgress } from 'material-ui/Progress';
 
 import Sound from './Sound';
+
+// We create this higher-order function because we need to stop event
+// propagation for the button clicks so the click on the card isn't
+// triggered
+const handlerWithoutEventPropagation = (event, handler) => () => {
+  event.stopPropagation();
+  handler();
+};
 
 class Timer extends Component {
   shouldComponentUpdate(nextProps) {
@@ -27,6 +36,7 @@ class Timer extends Component {
   }
   render() {
     const {
+      id,
       description,
       duration,
       remaining,
@@ -52,6 +62,10 @@ class Timer extends Component {
 
     return (
       <Card
+        onClick={() => {
+          console.log('clicou no card');
+          this.props.history.push(`/timer/${id}`);
+        }}
         square
         style={{
           textAlign: 'center',
@@ -70,32 +84,42 @@ class Timer extends Component {
           {description}
         </Typography>
         {timerInterval === null ? (
-          <IconButton onClick={onStartClick}>
+          <IconButton
+            onClick={e => handlerWithoutEventPropagation(e, onStartClick)()}
+          >
             <PlayIcon />
           </IconButton>
         ) : remaining < 0 ? (
           <IconButton
-            onClick={() => {
-              onPauseClick();
-              onResetClick();
-            }}
+            onClick={e =>
+              handlerWithoutEventPropagation(e, () => {
+                onPauseClick();
+                onResetClick();
+              })()
+            }
           >
             <Sound play={remaining < 0} />
             <StopIcon />
           </IconButton>
         ) : (
-          <IconButton onClick={onPauseClick}>
+          <IconButton
+            onClick={e => handlerWithoutEventPropagation(e, onPauseClick)()}
+          >
             <Sound play={remaining < 0} />
             <PauseIcon />
           </IconButton>
         )}
         {!(remaining < 0) ? (
-          <IconButton onClick={onResetClick}>
+          <IconButton
+            onClick={e => handlerWithoutEventPropagation(e, onResetClick)()}
+          >
             <ReplayIcon />
           </IconButton>
         ) : null}
         <div>
-          <IconButton onClick={onRemoveClick}>
+          <IconButton
+            onClick={e => handlerWithoutEventPropagation(e, onRemoveClick)()}
+          >
             <DeleteForeverIcon />
           </IconButton>
         </div>
@@ -104,4 +128,4 @@ class Timer extends Component {
   }
 }
 
-export default Timer;
+export default withRouter(Timer);

@@ -20,30 +20,33 @@ const TimersList = props => {
     <div className={props.classes.wrapperForFab}>
       <FlipMove>
         {props.timers.map(timer => {
+          /* div needed for FlipMove to work after we used withRouter
+             HOC on Timer */
           return (
-            <Timer
-              key={timer.id}
-              id={timer.id}
-              description={timer.description}
-              duration={timer.duration}
-              remaining={timer.remaining}
-              timerInterval={timer.timerInterval}
-              onStartClick={() => {
-                props.onStartTimerClick(timer.id);
-              }}
-              onPauseClick={() => {
-                props.onPauseTimerClick(timer.id);
-              }}
-              onResetClick={() => {
-                props.onResetTimerClick(timer.id);
-              }}
-              onRemoveClick={() => {
-                props.onRemoveTimerClick(timer.id);
-              }}
-              style={{
-                margin: '10px 0',
-              }}
-            />
+            <div key={timer.id}>
+              <Timer
+                id={timer.id}
+                description={timer.description}
+                duration={timer.duration}
+                remaining={timer.remaining}
+                timerInterval={timer.timerInterval}
+                onStartClick={() => {
+                  props.onStartTimerClick(timer.id);
+                }}
+                onPauseClick={() => {
+                  props.onPauseTimerClick(timer.id);
+                }}
+                onResetClick={() => {
+                  props.onResetTimerClick(timer.id);
+                }}
+                onRemoveClick={() => {
+                  props.onRemoveTimerClick(timer.id);
+                }}
+                style={{
+                  margin: '10px 0',
+                }}
+              />
+            </div>
           );
         })}
       </FlipMove>

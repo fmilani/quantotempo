@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -12,6 +13,8 @@ import AddTimerContainer from './AddTimerContainer';
 import throttle from 'lodash/throttle';
 import appReducers from './reducers';
 import { loadState, saveState } from './localStorage';
+
+import TimerPage from './TimerPage';
 
 const store = createStore(appReducers, loadState(), applyMiddleware(thunk));
 
@@ -42,11 +45,31 @@ document.getElementsByTagName('body')[0].style.backgroundColor = cyan[500];
 
 const App = () => (
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <Reboot />
-      <TimersListContainer />
-      <AddTimerContainer />
-    </MuiThemeProvider>
+    <Router>
+      <MuiThemeProvider theme={theme}>
+        <Reboot />
+        <Route
+          exact
+          path="/"
+          render={() => [
+            <TimersListContainer key="timers-list" />,
+            <AddTimerContainer key="add-timer" />,
+          ]}
+        />
+        <Route
+          path="/timer/:id"
+          render={({ match }) => {
+            const timer = store
+              .getState()
+              .timers.find(timer => timer.id === match.params.id);
+            if (!timer) {
+              return <div>No timer found!</div>;
+            }
+            return <TimerPage {...timer} />;
+          }}
+        />
+      </MuiThemeProvider>
+    </Router>
   </Provider>
 );
 
