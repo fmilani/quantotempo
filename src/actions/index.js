@@ -1,4 +1,4 @@
-import { v4 } from 'node-uuid';
+import uuidv4 from 'uuid/v4';
 
 export function changeNewTimerDescription(newDescription) {
   return {
@@ -17,7 +17,7 @@ export function changeNewTimerDuration(newDuration) {
 export function addTimer({ description, duration }) {
   return {
     type: 'ADD_TIMER',
-    id: v4(),
+    id: uuidv4(),
     description,
     duration,
     remaining: duration,
