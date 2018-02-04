@@ -21,7 +21,7 @@ const handlerWithoutEventPropagation = (event, handler) => () => {
   handler();
 };
 
-class Timer extends Component {
+class TimerSummary extends Component {
   shouldComponentUpdate(nextProps) {
     const remainingHasChanged = nextProps.remaining !== this.props.remaining;
     if (
@@ -63,7 +63,6 @@ class Timer extends Component {
     return (
       <Card
         onClick={() => {
-          console.log('clicou no card');
           this.props.history.push(`/timer/${id}`);
         }}
         square
@@ -128,4 +127,4 @@ class Timer extends Component {
   }
 }
 
-export default withRouter(Timer);
+export default withRouter(TimerSummary);

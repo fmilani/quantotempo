@@ -4,7 +4,7 @@ import 'moment-countdown';
 import countdown from 'countdown';
 import FlipMove from 'react-flip-move';
 
-import Timer from './Timer';
+import TimerSummary from './TimerSummary';
 
 countdown.setLabels(null, null, null, null, "Time's up");
 
@@ -24,7 +24,7 @@ const TimersList = props => {
              HOC on Timer */
           return (
             <div key={timer.id}>
-              <Timer
+              <TimerSummary
                 id={timer.id}
                 description={timer.description}
                 duration={timer.duration}

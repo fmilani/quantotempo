@@ -3,8 +3,15 @@ import { Component } from 'react';
 export default class Sound extends Component {
   constructor(props) {
     super(props);
-    this.audio = new Audio('beep.wav');
-    this.audio.play();
+    this.audio = new Audio('/beep.wav');
+    this.audio
+      .play()
+      .then(() => {
+        console.log('Alarm sound ready');
+      })
+      .catch(error => {
+        console.log('Error with alarm sound' + error);
+      });
     this.audio.muted = true;
     this.audio.loop = true;
   }

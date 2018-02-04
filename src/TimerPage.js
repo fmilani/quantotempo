@@ -5,7 +5,11 @@ import Link from './Link';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
-import PlayArrow from 'material-ui-icons/PlayArrow';
+import PlayIcon from 'material-ui-icons/PlayArrow';
+import PauseIcon from 'material-ui-icons/Pause';
+import StopIcon from 'material-ui-icons/Stop';
+
+import Sound from './Sound';
 
 const styles = theme => ({
   wrapper: { textAlign: 'center', height: '100vh' },
@@ -14,7 +18,17 @@ const styles = theme => ({
   },
   section: { maxWidth: '100%' },
 });
-const TimerPage = ({ description, duration, remaining, classes }) => {
+const TimerPage = ({
+  id,
+  description,
+  duration,
+  remaining,
+  timerInterval,
+  onStartTimerClick,
+  onPauseTimerClick,
+  onResetTimerClick,
+  classes,
+}) => {
   const now = moment();
   const end = moment(now).add(remaining, 'milliseconds');
   const cd = now.countdown(end, null, 2, 20);
@@ -66,7 +80,7 @@ const TimerPage = ({ description, duration, remaining, classes }) => {
           className={classes.section}
         >
           <Typography type="display3" className={classes.description}>
-            {cd.toString()}
+            {(cd.value < 0 && cd.seconds ? '- ' : '') + cd.toString()}
           </Typography>
         </Grid>
         <Grid
@@ -78,26 +92,46 @@ const TimerPage = ({ description, duration, remaining, classes }) => {
           xs={2}
           className={classes.section}
         >
-          <Button
-            onClick={() => {
-              console.log('click');
-            }}
-          >
+          <Button>
             <Link to="/">Back</Link>
           </Button>
-          <Button
-            aria-label="Add new timer"
-            fab
-            mini
-            color="secondary"
-            onClick={e => {
-              e.preventDefault();
-              // this.openModalForm();
-            }}
-          >
-            <PlayArrow />
-          </Button>
-          <Button>Reset</Button>
+          {!timerInterval ? (
+            <Button
+              aria-label="Start timer"
+              fab
+              mini
+              color="secondary"
+              onClick={onStartTimerClick}
+            >
+              <PlayIcon />
+            </Button>
+          ) : remaining < 0 ? (
+            <Button
+              aria-label="Stop timer"
+              fab
+              mini
+              color="secondary"
+              onClick={() => {
+                onPauseTimerClick();
+                onResetTimerClick();
+              }}
+            >
+              <Sound play={remaining < 0} />
+              <StopIcon />
+            </Button>
+          ) : (
+            <Button
+              aria-label="Pause timer"
+              fab
+              mini
+              color="secondary"
+              onClick={onPauseTimerClick}
+            >
+              <Sound play={remaining < 0} />
+              <PauseIcon />
+            </Button>
+          )}
+          <Button onClick={onResetTimerClick}>Reset</Button>
         </Grid>
       </Grid>
     </div>
