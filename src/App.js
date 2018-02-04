@@ -27,7 +27,7 @@ const App = () => (
         <Reboot />
         <Route
           exact
-          path="/"
+          path="/(|index.html)"
           render={() => [
             <TimersListContainer key="timers-list" />,
             <AddTimerContainer key="add-timer" />,
