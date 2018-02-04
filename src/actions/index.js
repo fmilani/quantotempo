@@ -27,6 +27,14 @@ export function addTimer({ description, duration }) {
 export function startTimer(id) {
   const TICK_INTERVAL = 100;
   return (dispatch, getState) => {
+    // first we find any running timer and pause/reset it to make sure only
+    // 1 timer is running at any time
+    getState()
+      .timers.filter(timer => timer.id !== id && timer.timerInterval)
+      .forEach(timer => {
+        dispatch(pauseTimer(timer.id));
+        dispatch(resetTimer(timer.id));
+      });
     const timerInterval = setInterval(() => {
       dispatch(tickTimer(id, TICK_INTERVAL));
     }, TICK_INTERVAL);
