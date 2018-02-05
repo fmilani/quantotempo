@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import 'moment-countdown';
+import Typography from 'material-ui/Typography';
+import Divider from 'material-ui/Divider';
 import countdown from 'countdown';
 import FlipMove from 'react-flip-move';
 
@@ -14,10 +15,19 @@ const styles = theme => ({
     // of the fab button from theme or somewhere else
     marginBottom: 56 + 2 * (2 * theme.spacing.unit),
   },
+  title: {
+    fontWeight: 300,
+    paddingLeft: 2 * theme.spacing.unit,
+    paddingTop: 2 * theme.spacing.unit,
+  },
 });
 const TimersList = props => {
   return (
     <div className={props.classes.wrapperForFab}>
+      <Typography type="display3" gutterBottom className={props.classes.title}>
+        My timers
+      </Typography>
+      <Divider />
       <FlipMove>
         {props.timers.map(timer => {
           /* div needed for FlipMove to work after we used withRouter
@@ -28,24 +38,11 @@ const TimersList = props => {
                 id={timer.id}
                 description={timer.description}
                 duration={timer.duration}
-                remaining={timer.remaining}
-                timerInterval={timer.timerInterval}
-                onStartClick={() => {
-                  props.onStartTimerClick(timer.id);
-                }}
-                onPauseClick={() => {
-                  props.onPauseTimerClick(timer.id);
-                }}
-                onResetClick={() => {
-                  props.onResetTimerClick(timer.id);
-                }}
                 onRemoveClick={() => {
                   props.onRemoveTimerClick(timer.id);
                 }}
-                style={{
-                  margin: '10px 0',
-                }}
               />
+              <Divider />
             </div>
           );
         })}

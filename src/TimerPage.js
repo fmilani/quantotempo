@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import 'moment-countdown';
 import { withStyles } from 'material-ui/styles';
 import Link from './Link';
 import Typography from 'material-ui/Typography';
