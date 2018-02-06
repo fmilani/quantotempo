@@ -24,9 +24,16 @@ storiesOf('TimerSummary', module)
   .addDecorator(story => (
     <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
   ))
-  .add('with hours, minutes and seconds', () => (
+  .add('without timer running', () => (
     <TimerSummary
       description="Timer without timer running"
       duration={3600000 + 54 * 60 * 1000 + 31 * 1000}
+    />
+  ))
+  .add('with timer running', () => (
+    <TimerSummary
+      description="Timer without timer running"
+      duration={3600000 + 54 * 60 * 1000 + 31 * 1000}
+      timerInterval={1}
     />
   ));

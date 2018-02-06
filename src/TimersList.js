@@ -38,6 +38,7 @@ const TimersList = props => {
                 id={timer.id}
                 description={timer.description}
                 duration={timer.duration}
+                timerInterval={timer.timerInterval}
                 onRemoveClick={() => {
                   props.onRemoveTimerClick(timer.id);
                 }}

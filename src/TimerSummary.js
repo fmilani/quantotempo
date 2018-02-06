@@ -7,7 +7,6 @@ import Grid from 'material-ui/Grid';
 import IconButton from 'material-ui/IconButton';
 import DeleteForeverIcon from 'material-ui-icons/DeleteForever';
 import Typography from 'material-ui/Typography';
-import { LinearProgress } from 'material-ui/Progress';
 
 // We create this higher-order function because we need to stop event
 // propagation for the button clicks so the click on the grid isn't
@@ -24,6 +23,9 @@ const styles = theme => ({
   description: {
     fontWeight: 300,
   },
+  running: {
+    fontStyle: 'italic',
+  },
 });
 
 class TimerSummary extends Component {
@@ -32,8 +34,8 @@ class TimerSummary extends Component {
       id,
       description,
       duration,
+      timerInterval,
       onRemoveClick,
-      style,
       classes,
       history,
     } = this.props;
@@ -56,7 +58,7 @@ class TimerSummary extends Component {
           direction="column"
           className={classes.infoWrapper}
         >
-          <Typography type="headline" className={classes.description}>
+          <Typography noWrap type="headline" className={classes.description}>
             {description}
           </Typography>
           <Typography noWrap type="subheading" className={classes.description}>
@@ -64,8 +66,11 @@ class TimerSummary extends Component {
               .countdown(moment().add(duration, 'milliseconds'))
               .toString()}
           </Typography>
+          <Typography noWrap type="caption" className={classes.running}>
+            {timerInterval ? '(running)' : null}
+          </Typography>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item>
           <IconButton
             onClick={e => handlerWithoutEventPropagation(e, onRemoveClick)()}
           >
