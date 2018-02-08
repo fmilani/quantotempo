@@ -32,7 +32,7 @@ const TimerPage = ({
 }) => {
   const now = moment();
   const end = moment(now).add(remaining, 'milliseconds');
-  const cd = now.countdown(end, null, 2, 20);
+  const cd = now.countdown(end, null, 3, 20);
   // rounding the units so the user only sees '0' time left
   // when the timer is really over
   cd.hours = Math.floor(cd.hours);
