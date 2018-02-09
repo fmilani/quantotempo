@@ -23,6 +23,10 @@ const styles = theme => ({
   description: {
     fontWeight: 300,
   },
+  noDescription: {
+    fontWeight: 200,
+    fontStyle: 'italic',
+  },
   running: {
     fontStyle: 'italic',
   },
@@ -58,9 +62,19 @@ class TimerSummary extends Component {
           direction="column"
           className={classes.infoWrapper}
         >
-          <Typography noWrap type="headline" className={classes.description}>
-            {description}
-          </Typography>
+          {description ? (
+            <Typography noWrap type="headline" className={classes.description}>
+              {description}
+            </Typography>
+          ) : (
+            <Typography
+              noWrap
+              type="headline"
+              className={classes.noDescription}
+            >
+              (no description)
+            </Typography>
+          )}
           <Typography noWrap type="subheading" className={classes.description}>
             {moment()
               .countdown(moment().add(duration, 'milliseconds'))
