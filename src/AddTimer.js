@@ -12,7 +12,8 @@ import Typography from 'material-ui/Typography';
 const styles = theme => ({
   addTimerFab: {
     textAlign: 'center',
-    width: '100%',
+    left: '50%',
+    transform: 'translate(-50%, 0)',
     position: 'fixed',
     bottom: 2 * theme.spacing.unit,
     zIndex: theme.zIndex.appBar,
