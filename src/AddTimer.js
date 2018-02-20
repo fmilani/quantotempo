@@ -149,6 +149,9 @@ class AddTimer extends Component {
                 e.preventDefault();
                 this.submitNewTimer();
               }}
+              style={{
+                height: 60,
+              }}
             >
               Create timer
             </Button>
