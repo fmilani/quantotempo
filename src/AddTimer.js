@@ -53,7 +53,7 @@ class TimerFormat extends Component {
 }
 
 class AddTimer extends Component {
-  state = { modalFormOpen: false };
+  state = { modalFormOpen: false, newTimerDescription: '' };
 
   submitNewTimer() {
     const hours = Math.floor(this.props.newTimerDuration / 10000);
@@ -90,7 +90,7 @@ class AddTimer extends Component {
       >
         <Paper className={classes.modal}>
           <Typography gutterBottom type="display2" id="modal-title">
-            New Timer
+            {this.state.newTimerDescription || 'New Timer'}
           </Typography>
           <form>
             <Input
@@ -132,7 +132,11 @@ class AddTimer extends Component {
               fullWidth
               className={classes.inputField}
               onChange={e => {
-                this.props.changeDescription(e.target.value);
+                const newTimerDescription = e.target.value;
+                this.props.changeDescription(newTimerDescription);
+                this.setState(prevState => ({
+                  newTimerDescription,
+                }));
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter') {
